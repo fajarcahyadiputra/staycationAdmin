@@ -5,13 +5,18 @@
   <!-- Begin Page Content -->
   <div class="container-fluid">
 
+    <%- include('../partial/message.ejs') %>
+
       <!-- Page Heading -->
       <h1 class="h3 mb-4 text-gray-800">CATEGORY</h1>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Data Category</h6>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">
+                    Add
+                </button>
             </div>
             <div class="card-body">
                 <%- include('table_category.ejs') %>
@@ -21,6 +26,16 @@
 
 </div>
  <!-- /.container-fluid -->
-
-
+<%- include('modal_add.ejs') %>
+<%- include('modal_edit.ejs') %>
 <%- include('../../templets/footer.ejs') %>
+
+<script>
+    $(document).on('click', '#btn-edit',function(){
+        let name = $(this).data('name');
+        let id   = $(this).data('id')
+        $('#formEdit #name').val(name);
+        $('#formEdit #id').val(id);
+        $('#modalEdit').modal('show')
+    })
+</script>

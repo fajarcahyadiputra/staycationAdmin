@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
 
 const bankShema = new mongoose.Schema({
-    namaBank: {
+    nameBank: {
         type: String,
         required: true
     },
-    nomerRekening: {
+    number: {
         type: String,
         required: true
     },
-    nama: {
+    name: {
         type: String,
         required: true
     },
+    image: {
+        type: String,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Bank', bankShema);

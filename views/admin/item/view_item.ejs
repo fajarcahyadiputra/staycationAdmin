@@ -5,18 +5,24 @@
 
   <!-- Begin Page Content -->
   <div class="container-fluid">
-
+    <%- include('../partial/message.ejs') %>
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">ITEM</h1>
 
         <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-          <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Data Item</h6>
-          </div>
-          <div class="card-body">
-              <%- include('table_item.ejs') %>
-          </div>
+        <div class="shadow mb-4" style="padding: 20px;">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="item-tab" data-toggle="tab" href="#show-item" role="tab" aria-controls="home" aria-selected="true">Show Item</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="add-tab" data-toggle="tab" href="#add-item" role="tab" aria-controls="profile" aria-selected="false">Add Item</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <%- include('show_table_item.ejs') %>
+              <%- include('form_add_item.ejs') %>
+            </div>
       </div>
       <!-- end data table -->
 
@@ -24,3 +30,10 @@
 <!-- /.container-fluid -->
 
 <%- include('../../templets/footer.ejs') %>
+
+<script>
+  $(document).ready(function(){
+    //ckeditor
+		let ck1 = CKEDITOR.replace('about'); 
+  })
+</script>

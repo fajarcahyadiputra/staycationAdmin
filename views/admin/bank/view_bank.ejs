@@ -6,13 +6,15 @@
   <!-- Begin Page Content -->
   <div class="container-fluid">
 
+    <%- include('../partial/message.ejs') %>
+
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">BANK</h1>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Data Bank</h6>
+             <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">Add</button>
           </div>
           <div class="card-body">
               <%- include('table_bank.ejs') %>
@@ -22,5 +24,71 @@
 
 </div>
 <!-- /.container-fluid -->
-
+  <%- include('modal_add.ejs') %>
+  <%-include('modal_edit.ejs') %>
 <%- include('../../templets/footer.ejs') %>
+
+<script>
+  $(document).ready(function(){
+    //ajax to remove data
+    $('#dataTable').on('click','#btn-delete', function(){
+      const id = $(this).data('id')
+
+      Swal.fire({
+				title: 'Are your sure?',
+				text: "Want To Delete It!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Ya, Do It!'
+			}).then((result) => {
+				if (result.value) {
+
+            $.ajax({
+              url: '/admin/bank',
+              data: {'id': id},
+              dataType: 'JSON',
+              type: 'delete',
+              success: function(result){
+                if(result.delete == true){
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Success Delete...',
+                    text: 'Yeah, You Success Delete It!',
+                  })
+                }else{
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You Fail To Delete It!',
+                  })
+                }
+                setTimeout(()=>{
+                  location.reload();
+                },500)
+              }
+            })
+
+        }
+      })
+    })
+    //end ajax to delete data
+
+    //ajax to edit data
+    $('#dataTable').on('click','#btn-edit', function(){
+
+      const id = $(this).data('id');
+      const number = $(this).data('number');
+      const name = $(this).data('name');
+      const namebank = $(this).data('bankname');
+
+      $('#form-edit-bank #name').val(name)
+      $('#form-edit-bank #number').val(number)
+      $('#form-edit-bank #nameBank').val(namebank)
+      $('#form-edit-bank #id').val(id)
+
+      $('#modalEdit').modal('show');
+    })
+  })
+</script>

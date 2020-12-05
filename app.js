@@ -3,6 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('connect-flash');
+
+//import database
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/staycation',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: true
+});
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -16,6 +29,18 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+//for make a session
+app.use(session({
+  secret : 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {maxAge: 60000}
+}));
+
+//for make flash message
+app.use(flash());
+
+app.use(methodOverride('_method'))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
