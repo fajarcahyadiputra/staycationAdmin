@@ -27,7 +27,7 @@ const ItemShema = new mongoose.Schema({
     },
     categoryId: {
         type    : ObjectId, 
-        ref     : 'category'
+        ref     : 'Category'
     },
     imageId: [{
         type    : ObjectId,

@@ -5,6 +5,13 @@ const Image  = require('../models/Image');
 module.exports = {
     viewItem: async (req, res)=>{
         try {
+            //populate for get data relation of image
+            const item = await Item.find()
+            .populate({path: 'imageId', select: 'id imageUrl'})
+            .populate({path: 'categoryId', select: 'name'});
+
+            console.log(item);
+
             const alertStatus = req.flash('alertStatus');
             const alertMessage = req.flash('alertMessage');
             const alert        = {message:alertMessage, status: alertStatus};
@@ -34,7 +41,7 @@ module.exports = {
                 category.itemId.push({_id: item._id});
                 await category.save();
                 for(let i=0; i<req.files.length; i++){
-                    const newImage = await Image.create({imageUrl: `images/${req.files.filename}`})
+                    const newImage = await Image.create({imageUrl: `images/${req.files[i].filename}`})
                      //for push to relation array data
                     item.imageId.push({_id: newImage._id});
                     await item.save();
