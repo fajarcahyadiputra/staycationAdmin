@@ -17,10 +17,14 @@ mongoose.connect('mongodb://localhost:27017/staycation',{
 });
 
 
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 //untuk mengimport route admin
 const adminRouter = require('./routes/admin');
+//impor router api
+const apiRouter = require('./routes/api');
 const { static } = require('express');
 
 var app = express();
@@ -48,10 +52,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //untuk meload data asset dari sb admin 2
 app.use('/sb-admin-2', express.static(path.join(__dirname, 'node_modules/startbootstrap-sb-admin-2')))
+//for use router
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
-
+app.use('/api/v1/member', apiRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

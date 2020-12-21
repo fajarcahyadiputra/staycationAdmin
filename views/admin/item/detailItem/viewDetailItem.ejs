@@ -1,0 +1,95 @@
+<%- include('../../../templets/header.ejs') %>
+<%- include('../../../templets/sidebar.ejs') %>
+<%- include('../../../templets/navbar.ejs') %>
+
+
+  <!-- Begin Page Content -->
+<div class="container-fluid">
+    <%- include('../../partial/message.ejs') %>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">DETAIL ITEM</h1>
+
+
+    <div class="shadow mb-4" style="padding: 20px;">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link <%= type == 'feature'?'active':'' %>" id="feature-tab" data-toggle="tab" href="#show-featute" role="tab" aria-controls="home" aria-selected="true">Show Feature</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link <%= type == 'activity'?'active':'' %>" id="activity-tab" data-toggle="tab" href="#show-activity" role="tab" aria-controls="profile" aria-selected="false">Show Activity</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <%- include('show_feature.ejs') %>
+            <%- include('show_activity.ejs') %>
+        </div>
+  </div>
+       
+</div>
+<!-- /.container-fluid -->
+
+<%- include('../../../templets/footer.ejs') %>
+
+<script>
+    $(document).ready(function(){
+        $('#dataTableActivity').DataTable();
+
+        //ajax to show data edit feature
+        $(document).on('click','#btn-edit-feature', function(){
+            const id = $(this).data('id')
+            const name =  $(this).data('name');
+            const qty =  $(this).data('qty');
+            const itemId = $(this).data("itemid");
+
+            $('#box-formFeature').html(`<form id="formEdit" action="/admin/item/edit-feature?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control" id="name" value="${name}">
+                        <input type="hidden" name="id"  value="${id}">
+                        <input type="hidden" name="itemId"  value="${itemId}">
+                    </div>
+                    <div class="form-group">
+                        <label for="qty">Qty</label>
+                        <input type="number" name="qty" class="form-control" id="qty" value="${qty}">
+                        <input type="hidden" name="type" value="feature">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" multiple  class="form-control" id="image">
+                    </div>
+                    <a href="/admin/item" class="btn btn-secondary" >Back</a>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>`);
+        })
+
+            //ajax to show data edit activity
+            $(document).on('click','#btn-edit-activity', function(){
+            const id = $(this).data('id')
+            const name =  $(this).data('name');
+            const type =  $(this).data('type');
+            const itemId = $(this).data("itemid");
+            const isPopuler = $(this).data('ispopuler');
+
+
+            $('.box-formActivity').html(`<form id="formEdit" action="/admin/item/edit-activity?_method=PUT" method="POST" enctype="multipart/form-data">
+                  <div class="form-group">
+                        <label for="name">name</label>
+                        <input type="text" name="name" class="form-control" id="name" value="${name}">
+                        <input type="hidden" name="nameType" value="activity">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <input type="text" name="type" class="form-control" id="type" value="${type}">
+                        <input type="hidden" name="itemId" value="${itemId}">
+                        <input type="hidden" name="activityId" value="${id}">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" multiple  class="form-control" id="image">
+                    </div>
+                    <a href="/admin/item" class="btn btn-secondary" >Back</a>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>`);
+        })
+    })
+</script>

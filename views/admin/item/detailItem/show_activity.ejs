@@ -1,0 +1,66 @@
+<div class="tab-pane fade show <%= type == 'activity'?'active':'' %> mt-3" id="show-activity" role="tabpanel" aria-labelledby="item-tab">
+    <div class="row">
+        <!-- //form -->
+        <div class="col-md-5 box-formActivity">
+            <form action="/admin/item/add-activity" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" id="name" >
+                    <input type="hidden" name="itemId" value="<%= itemId %>" >
+                    <input type="hidden" name="nameType" value="activity" >
+                </div>
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <input type="text" name="type" class="form-control" id="type" >
+                </div>
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input type="file" name="image" multiple  class="form-control" id="image" >
+                </div>
+                <a href="/admin/item" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+        <div class="col-md-7">
+            <!-- //table -->
+            <div class="table-responsive">
+                <table class="table table-bordered " id="dataTableActivity" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="text-center"> 
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                     <% activity.map((data, index)=>{%>
+                        <tr>
+                            <td><%= index+1 %></td>
+                            <td><%= data.name %></td>
+                            <td><%= data.type %></td>
+                            <td><img width="100" src="http://localhost:8080/<%= data.imageUrl %>" alt="image of activity"></td>
+                            <td>
+                                <form action="/admin/item/delete-activity?id=<%= data._id %>&itemid=<%= itemId %>&type=activity&_method=DELETE" method="post">
+                                <button type="button" class="btn btn-info btn-sm" id="btn-edit-activity" data-name="<%= data.name %>" data-id="<%= data.id %>" data-itemid="<%= itemId %>" data-type="<%= data.type %>" data-ispopuler="<%= data.isPopuler %>"><i class="fa fa-edit"></i></button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

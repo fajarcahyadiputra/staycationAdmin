@@ -6,7 +6,7 @@ module.exports = {
         const alertMessage = req.flash('alertMessage');
         const alert        = {message:alertMessage, status: alertStatus}
         const dataCategory = await Category.find();
-        res.render('admin/category/view_category',{dataCategory, alert, title:"Staycation | Category"});
+        res.render('admin/category/view_category',{dataCategory, alert, title:"Staycation | Category",user: req.session.user});
     },
     addCategory: async (req, res)=>{
        try {

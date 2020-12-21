@@ -4,28 +4,50 @@
 
 
   <!-- Begin Page Content -->
-  <div class="container-fluid">
+<div class="container-fluid">
     <%- include('../partial/message.ejs') %>
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">ITEM</h1>
 
-        <!-- DataTales Example -->
-        <div class="shadow mb-4" style="padding: 20px;">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="item-tab" data-toggle="tab" href="#show-item" role="tab" aria-controls="home" aria-selected="true">Show Item</a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link" id="add-tab" data-toggle="tab" href="#add-item" role="tab" aria-controls="profile" aria-selected="false">Add Item</a>
-              </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-              <%- include('show_table_item.ejs') %>
-              <%- include('form_add_item.ejs') %>
-            </div>
-      </div>
-      <!-- end data table -->
+    <% if(action == "view"){ %>
 
+    <div class="shadow mb-4" style="padding: 20px;">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="item-tab" data-toggle="tab" href="#show-item" role="tab" aria-controls="home" aria-selected="true">Show Item</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="add-tab" data-toggle="tab" href="#add-item" role="tab" aria-controls="profile" aria-selected="false">Add Item</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+          <%- include('show_table_item.ejs') %>
+          <%- include('form_add_item.ejs') %>
+        </div>
+  </div>
+
+
+    <%}else if(action == "showImage"){ %>
+      
+      <div class="shadow mb-4" style="padding: 20px;">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="image-tab" data-toggle="tab" href="#show-image" role="tab" aria-controls="home" aria-selected="true">Show Image</a>
+          </li>
+          <!-- <li class="nav-item" role="presentation">
+            <a class="nav-link" id="add-tab" data-toggle="tab" href="#add-item" role="tab" aria-controls="profile" aria-selected="false">Add Item</a>
+          </li> -->
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+        <%- include('show_image_item.ejs') %>
+      </div>
+    </div>
+
+    <%}else if(action == "editPage"){%>
+      <%- include('show_edit_page.ejs') %>
+    <%}%>
+       
 </div>
 <!-- /.container-fluid -->
 
@@ -34,6 +56,52 @@
 <script>
   $(document).ready(function(){
     //ckeditor
-		let ck1 = CKEDITOR.replace('about'); 
+    let ck1 = CKEDITOR.replace('description'); 
+    
+    //action to delete data item
+    $(document).on('click', '#btn-delete', function(){
+      const id = $(this).data('id');
+
+      Swal.fire({
+				title: 'Are your sure?',
+				text: "Want To Delete It!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Ya, Do It!'
+			}).then((result) => {
+				if (result.value) {
+
+      $.ajax({
+        url: "/admin/item",
+        data: {id: id},
+        dataType: 'JSON',
+        type: "DELETE",
+        success:function(result){
+          if(result.delete == true){
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Success Delete...',
+                    text: 'Yeah, You Success Delete It!',
+                  })
+                }else{
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You Fail To Delete It!',
+                  })
+                }
+                setTimeout(()=>{
+                  location.reload();
+                },500)
+
+        }
+      })
+
+    }
   })
+})
+})
+
 </script>

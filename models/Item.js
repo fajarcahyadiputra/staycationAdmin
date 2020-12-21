@@ -6,6 +6,10 @@ const ItemShema = new mongoose.Schema({
         type    : String,
         required: true
     },
+    sumBooking: {
+        type: Number,
+        required: true
+    },
     price: {
         type    : String,
         required: true
@@ -14,13 +18,25 @@ const ItemShema = new mongoose.Schema({
         type    : String,
         default : 'indonesia'
     },
+    duration:  {
+        type: Number,
+        required : true
+    },
     city: {
         type    : String,
         required: true
     },
+    sumBooking: {
+        type    : Number,
+        required: 0
+    },
     isPopular: {
         type    : Boolean,
         default : false
+    },
+    unit: {
+        type    : String,
+        default : 'night'
     },
     description: {
         type: String

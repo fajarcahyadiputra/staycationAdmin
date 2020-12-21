@@ -1,0 +1,12 @@
+<div class="tab-pane fade show active mt-3" id="show-item" role="tabpanel" aria-labelledby="item-tab">
+    <div class="row overflow-auto" style="height: 350px; ">
+       <% item.imageId.map((img, index)=>{%>
+             <div class="col-md-4">
+                 <div class="card shadow mt-3 mb-3">
+                     <img width="300" height="300" src="http://localhost:8080/<%= img.imageUrl %>" alt="Image Of Item">
+                 </div>
+             </div>
+        <%})%>
+    </div>
+    <a class="btn btn-warning" href="/admin/item">Back</a>
+</div>

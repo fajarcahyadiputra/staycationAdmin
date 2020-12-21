@@ -14,12 +14,10 @@ const activitySchema = new mongoose.Schema({
         type    : String,
         required: true
     },
-    isPopular: {
-        type    : Boolean,
-        required: true
-    },
     itemId:{
         type    :ObjectId,
         ref     :"Item"
-    }
+    },
 })
+
+module.exports = mongoose.model('Activity', activitySchema);

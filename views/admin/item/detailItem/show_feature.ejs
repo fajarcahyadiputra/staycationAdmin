@@ -1,0 +1,66 @@
+<div class="tab-pane fade show <%= type == 'feature'?'active':'' %> mt-3" id="show-featute" role="tabpanel" aria-labelledby="item-tab">
+        <div class="row">
+            <!-- //form -->
+            <div class="col-md-5" id="box-formFeature">
+                <form id="FormFeatute" action="/admin/item/add-feature" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control" id="name" >
+                        <input type="hidden" name="itemId" value="<%= itemId %>" >
+                    </div>
+                    <div class="form-group">
+                        <label for="qty">Qty</label>
+                        <input type="number" name="qty" class="form-control" id="qty" >
+                        <input type="hidden" name="type" value="feature" >
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" multiple  class="form-control" id="image" >
+                    </div>
+                    <a href="/admin/item" class="btn btn-secondary" >Back</a>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+            <div class="col-md-7">
+                <!-- //table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>QTY</th>
+                                <th>Image URL</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr class="text-center"> 
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>QTY</th>
+                                <th>Image URL</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <% feature.map((data, index)=>{ %>
+                                <tr>
+                                    <td><%= index+1 %></td>
+                                    <td><%= data.name %></td>
+                                    <td><%= data.qty %></td>
+                                    <td><img width="150px" src="http://localhost:8080/<%= data.imageUrl %>" alt="Imgae Of Feature"></td>
+                                    <td>
+                                        <form action="/admin/item/delete-feature?id=<%= data._id %>&itemid=<%= itemId %>&type=feature&_method=DELETE" method="post">
+                                        <button type="button" class="btn btn-info btn-sm" id="btn-edit-feature" data-name="<%= data.name %>" data-qty="<%= data.qty %>" data-id="<%= data.id %>" data-itemid="<%= itemId %>"><i class="fa fa-edit"></i></button>
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>

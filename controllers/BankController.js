@@ -8,7 +8,7 @@ module.exports = {
         const alertMessage = req.flash('alertMessage');
         const alert        = {message:alertMessage, status: alertStatus};
         const bank = await  Bank.find();
-        res.render('admin/bank/view_bank',{bank, alert, title: "Staycation | Bank"});
+        res.render('admin/bank/view_bank',{bank, alert, title: "Staycation | Bank",user: req.session.user});
     },
     insertBank: async (req, res)=>{
         console.log(req.file)
