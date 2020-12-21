@@ -49,7 +49,7 @@
                                     <td><%= index+1 %></td>
                                     <td><%= data.name %></td>
                                     <td><%= data.qty %></td>
-                                    <td><img width="150px" src="http://fajarcahyadiputra-nodejs.heroku.com/<%= data.imageUrl %>" alt="Imgae Of Feature"></td>
+                                    <td><img width="150px" src="http://fajarcahyadiputra-nodejs.herokuapp.com/<%= data.imageUrl %>" alt="Imgae Of Feature"></td>
                                     <td>
                                         <form action="/admin/item/delete-feature?id=<%= data._id %>&itemid=<%= itemId %>&type=feature&_method=DELETE" method="post">
                                         <button type="button" class="btn btn-info btn-sm" id="btn-edit-feature" data-name="<%= data.name %>" data-qty="<%= data.qty %>" data-id="<%= data.id %>" data-itemid="<%= itemId %>"><i class="fa fa-edit"></i></button>
